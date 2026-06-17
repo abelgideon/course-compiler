@@ -12,7 +12,7 @@ import { FcGoogle } from "react-icons/fc";
 
 export default function SignupPage() {
   return (
-    <Card className="w-full max-w-sm mt-36">
+    <Card className="w-full max-w-sm mt-36 mx-4 md:mx-0">
       <CardHeader>
         <CardTitle>Sign up for an account</CardTitle>
         <CardDescription>

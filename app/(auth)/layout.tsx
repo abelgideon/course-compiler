@@ -8,7 +8,10 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <div>
       <Link
-        className={cn(buttonVariants({ variant: "secondary" }), "self-start")}
+        className={cn(
+          buttonVariants({ variant: "secondary" }),
+          "hidden md:inline-flex md:self-start",
+        )}
         href="/"
       >
         <ArrowLeft />
