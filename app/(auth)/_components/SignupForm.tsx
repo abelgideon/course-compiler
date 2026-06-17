@@ -25,7 +25,7 @@ export default function SignupForm() {
         callbackURL: "/",
         fetchOptions: {
           onSuccess: () => {
-            toast.success("Signed up with Google, you will be redirected...");
+            toast.success("Signing up with Google, you will be redirected...");
           },
           onError: () => {
             toast.error("Internal Server Error");

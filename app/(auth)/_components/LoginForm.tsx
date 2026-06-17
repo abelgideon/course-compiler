@@ -25,7 +25,7 @@ export default function LoginForm() {
         callbackURL: "/",
         fetchOptions: {
           onSuccess: () => {
-            toast.success("Logged in with Google, you will be redirected...");
+            toast.success("Logging in with Google, you will be redirected...");
           },
           onError: () => {
             toast.error("Internal Server Error");
