@@ -8,6 +8,8 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
+import Navbar from "@/components/navbar";
 
 const playfairDisplayHeading = Playfair_Display({
   subsets: ["latin"],
@@ -48,9 +50,18 @@ export default function RootLayout({
         inter.variable,
         playfairDisplayHeading.variable,
       )}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col mt-5 max-w-[90%] mx-auto">
-        {children}
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <div className="flex-1 w-full max-w-7xl mx-auto">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   );
