@@ -10,6 +10,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
+import { Toaster } from "sonner";
 
 const playfairDisplayHeading = Playfair_Display({
   subsets: ["latin"],

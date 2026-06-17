@@ -1,10 +1,13 @@
+"use client";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
+import { useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { ArrowRight, DotIcon } from "lucide-react";
 import Link from "next/link";
 
 export default function HomePage() {
+  const { data: session } = useSession();
   return (
     <main className="text-center mt-30 md:mt-50">
       <Badge className="text-[8px] md:text-[10px]">
@@ -19,9 +22,15 @@ export default function HomePage() {
       <p className="mt-3 text-[15px] md:text-lg text-muted-foreground max-w-70 md:max-w-md mx-auto">
         Store your courses and track your progress all in one place.
       </p>
-      <Link className={cn(buttonVariants(), "mt-7")} href={"/signup"}>
-        Get Started Now <ArrowRight />
-      </Link>
+      {session ? (
+        <Link className={cn(buttonVariants(), "mt-7")} href={"/dashboard"}>
+          Go to Dashboard <ArrowRight />
+        </Link>
+      ) : (
+        <Link className={cn(buttonVariants(), "mt-7")} href={"/signup"}>
+          Get Started Now <ArrowRight />
+        </Link>
+      )}
     </main>
   );
 }
