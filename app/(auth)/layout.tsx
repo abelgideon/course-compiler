@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         <ArrowLeft />
         Back
       </Link>
-      <div>{children}</div>
+      <div className="flex justify-center">{children}</div>
     </div>
   );
 }
