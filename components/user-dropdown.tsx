@@ -2,11 +2,13 @@
 
 import React from "react";
 import {
+  ChartNoAxesCombined,
   ChevronDown,
   GitGraphIcon,
   LayoutDashboardIcon,
   Loader,
   LogOutIcon,
+  PlusIcon,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -19,11 +21,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "@/lib/auth-client";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export default function DropdownMenuAvatar() {
   const [open, setOpen] = React.useState(false);
@@ -99,7 +102,7 @@ export default function DropdownMenuAvatar() {
           </Link>
           <Link href={"/dashboard/stats"}>
             <DropdownMenuItem>
-              <GitGraphIcon />
+              <ChartNoAxesCombined />
               Stats
             </DropdownMenuItem>
           </Link>
