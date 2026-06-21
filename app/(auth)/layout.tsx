@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div>
+    <div className="mt-8">
       <Link
         className={cn(
           buttonVariants({ variant: "secondary" }),
