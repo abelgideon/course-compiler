@@ -5,7 +5,7 @@ import {
   ChartNoAxesCombined,
   ChevronDown,
   GitGraphIcon,
-  LayoutDashboardIcon,
+  GraduationCapIcon,
   Loader,
   LogOutIcon,
   PlusIcon,
@@ -94,13 +94,13 @@ export default function DropdownMenuAvatar() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={"/dashboard"}>
+          <Link href={"/courses"}>
             <DropdownMenuItem>
-              <LayoutDashboardIcon />
-              Dashboard
+              <GraduationCapIcon />
+              Courses
             </DropdownMenuItem>
           </Link>
-          <Link href={"/dashboard/stats"}>
+          <Link href={"/courses/stats"}>
             <DropdownMenuItem>
               <ChartNoAxesCombined />
               Stats

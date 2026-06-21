@@ -47,7 +47,7 @@ export default function CourseCreatePage() {
           buttonVariants({ variant: "secondary" }),
           "hidden md:inline-flex md:self-start",
         )}
-        href="/dashboard"
+        href="/courses"
       >
         <ArrowLeft />
         Back

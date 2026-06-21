@@ -4,9 +4,10 @@ import { buttonVariants } from "./ui/button";
 import { ModeToggle } from "./theme-toggle";
 import { useSession } from "@/lib/auth-client";
 import DropdownMenuAvatar from "./user-dropdown";
+import { Skeleton } from "./ui/skeleton";
 
 export default function Navbar() {
-  const session = useSession();
+  const { data, isPending } = useSession();
   return (
     <header className="sticky top-0 z-50 border-b bg-background">
       <nav className="flex flex-col gap-3 md:flex-row md:gap-0 items-center justify-between max-w-7xl mx-auto px-4 py-4">
@@ -14,14 +15,14 @@ export default function Navbar() {
           Logo
         </Link>
         <div className="flex items-center space-x-3">
-          {session.data ? (
+          {isPending ? (
+            <Skeleton className="h-10 mr-3 w-40" />
+          ) : data ? (
             <>
               <DropdownMenuAvatar />
-              <ModeToggle />
             </>
           ) : (
             <>
-              <ModeToggle />
               <Link
                 href="/login"
                 className={buttonVariants({ variant: "secondary" })}
@@ -33,6 +34,7 @@ export default function Navbar() {
               </Link>
             </>
           )}
+          <ModeToggle />
         </div>
       </nav>
     </header>
