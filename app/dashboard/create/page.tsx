@@ -20,33 +20,9 @@ import { cn } from "@/lib/utils";
 import { ArrowLeft, Loader, PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { useForm, type FieldValues } from "react-hook-form";
-import { z } from "zod";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const courseSchema = z.object({
-  playlistUrl: z.url("Please enter a valid url").refine((url) => {
-    try {
-      const parsed = new URL(url);
-      const isYouTube =
-        parsed.hostname === "youtube.com" ||
-        parsed.hostname === "www.youtube.com";
-
-      const hasPlaylistId = parsed.searchParams.has("list");
-
-      return isYouTube && hasPlaylistId;
-    } catch {
-      return false;
-    }
-  }),
-  title: z
-    .string()
-    .max(50, "Title can not be more than 50 characters")
-    .min(1, "Title is required"),
-  description: z
-    .string()
-    .max(100, "Description can not be more than 100 characters"),
-  category: z.string().max(50, "Category can not be more than 50 characters"),
-});
+import { courseSchema, TCourseSchema } from "@/lib/types";
 
 export default function CourseCreatePage() {
   const {
@@ -54,11 +30,11 @@ export default function CourseCreatePage() {
     register,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm({
+  } = useForm<TCourseSchema>({
     resolver: zodResolver(courseSchema),
   });
 
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = async (data: TCourseSchema) => {
     console.log(data);
     await new Promise((resolve) => setTimeout(resolve, 5000));
     reset();
