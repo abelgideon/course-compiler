@@ -1,5 +1,15 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  timestamp,
+  boolean,
+  index,
+  uuid,
+  varchar,
+  integer,
+  unique,
+} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -73,9 +83,108 @@ export const verification = pgTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
+export const playlists = pgTable("playlists", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  youtubePlaylistId: varchar("youtube_playlist_id", { length: 100 })
+    .notNull()
+    .unique(),
+  url: text("url").notNull(),
+  playlistTitle: varchar("playlist_title", { length: 255 }),
+  thumbnailUrl: text("thumbnail_url"),
+  videoCount: integer("video_count"),
+  channelTitle: varchar("channel_title", {
+    length: 255,
+  }),
+  lastSyncedAt: timestamp("last_synced_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .notNull()
+    .$onUpdate(() => new Date()),
+});
+
+export const courses = pgTable(
+  "courses",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    title: varchar("title", {
+      length: 100,
+    }).notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, {
+        onDelete: "cascade",
+      }),
+    playlistId: uuid("playlist_id")
+      .notNull()
+      .references(() => playlists.id, {
+        onDelete: "cascade",
+      }),
+    description: text("description"),
+    category: varchar("category", {
+      length: 50,
+    }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .notNull()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    unique("courses_user_playlist_unique").on(table.userId, table.playlistId),
+  ],
+);
+
+export const videos = pgTable("videos", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  youtubeVideoId: varchar("youtube_video_id", { length: 20 })
+    .notNull()
+    .unique(),
+  playlistId: uuid("playlist_id")
+    .notNull()
+    .references(() => playlists.id, { onDelete: "cascade" }),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  thumbnailUrl: text("thumbnail_url"),
+  duration: integer("duration"),
+  position: integer("position").notNull(),
+  channelTitle: varchar("channel_title", { length: 255 }),
+  publishedAt: timestamp("published_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .notNull()
+    .$onUpdate(() => new Date()),
+});
+
+export const videoRelations = relations(videos, ({ one }) => ({
+  playlist: one(playlists, {
+    fields: [videos.playlistId],
+    references: [playlists.id],
+  }),
+}));
+
+export const playlistRelations = relations(playlists, ({ many }) => ({
+  courses: many(courses),
+  videos: many(videos),
+}));
+
+export const courseRelations = relations(courses, ({ one }) => ({
+  playlist: one(playlists, {
+    fields: [courses.playlistId],
+    references: [playlists.id],
+  }),
+
+  user: one(user, {
+    fields: [courses.userId],
+    references: [user.id],
+  }),
+}));
+
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
+  courses: many(courses),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -91,3 +200,12 @@ export const accountRelations = relations(account, ({ one }) => ({
     references: [user.id],
   }),
 }));
+
+export type Playlist = typeof playlists.$inferSelect;
+export type NewPlaylist = typeof playlists.$inferInsert;
+
+export type Course = typeof courses.$inferSelect;
+export type NewCourse = typeof courses.$inferInsert;
+
+export type Video = typeof videos.$inferSelect;
+export type NewVideo = typeof videos.$inferInsert;

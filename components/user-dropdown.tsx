@@ -6,8 +6,10 @@ import {
   ChevronDown,
   GitGraphIcon,
   GraduationCapIcon,
+  Headset,
   Loader,
   LogOutIcon,
+  MessageSquareText,
   PlusIcon,
 } from "lucide-react";
 
@@ -94,18 +96,26 @@ export default function DropdownMenuAvatar() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={"/courses"}>
-            <DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={"/courses"}>
               <GraduationCapIcon />
               Courses
-            </DropdownMenuItem>
-          </Link>
-          <Link href={"/courses/stats"}>
-            <DropdownMenuItem>
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem asChild>
+            <Link href={"/courses/stats"}>
               <ChartNoAxesCombined />
               Stats
-            </DropdownMenuItem>
-          </Link>
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem asChild>
+            <a href={"https://t.me/codewithabel"} target="_blank">
+              <Headset />
+              Feedback
+            </a>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem
