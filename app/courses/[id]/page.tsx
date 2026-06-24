@@ -9,7 +9,7 @@ export default async function SingleCoursePage({
   const { id } = await params;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr]">
+    <div className="mt-5 gap-4 grid grid-cols-1 md:grid-cols-[2fr_1fr]">
       <VideoPlayer />
       <VideoList />
     </div>

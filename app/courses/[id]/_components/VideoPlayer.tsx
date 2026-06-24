@@ -1,6 +1,6 @@
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { RefreshCcw } from "lucide-react";
+import { CheckCircle, RefreshCcw } from "lucide-react";
 
 const course = {
   title: "Learn HTML & CSS by Building Projects",
@@ -19,7 +19,7 @@ const currentVideo = {
 export default function VideoPlayer() {
   return (
     <div className="p-3">
-      <div className="flex flex-col md:flex-row items-center md:justify-between border-b pb-2">
+      <div className="flex flex-col md:flex-row items-center md:justify-between border-b pb-2 gap-3">
         <div>
           <h1 className="text-xl font-semibold">{course.title}</h1>
           <p className="text-xs text-muted-foreground">
@@ -57,6 +57,10 @@ export default function VideoPlayer() {
         </div>
 
         <p className="mt-2 text-muted-foreground">{currentVideo.description}</p>
+
+        <Button variant="outline" className="mt-6">
+          <CheckCircle /> Mark as complete
+        </Button>
       </div>
     </div>
   );

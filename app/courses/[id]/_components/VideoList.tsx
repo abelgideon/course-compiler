@@ -1,6 +1,7 @@
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PlayCircleIcon, PlayIcon } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 
 const videos = [
   {
@@ -35,9 +36,27 @@ const videos = [
   },
 ];
 
+const courseProgress = {
+  completed: 2,
+  total: 5,
+};
+
+const progressPercentage =
+  (courseProgress.completed / courseProgress.total) * 100;
+
 export default function VideoList() {
   return (
-    <div className="md:mt-16 p-3 flex flex-col gap-y-3">
+    <div className="p-3 flex flex-col gap-y-3">
+      <div className="space-y-2">
+        <div className="flex justify-between text-sm">
+          <span className="font-medium">Course Progress</span>
+          <span className="text-muted-foreground">
+            {courseProgress.completed}/{courseProgress.total} completed
+          </span>
+        </div>
+
+        <Progress value={progressPercentage} />
+      </div>
       {videos.map((video) => (
         <button
           key={video.id}
