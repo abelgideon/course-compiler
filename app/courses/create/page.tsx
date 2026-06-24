@@ -23,6 +23,10 @@ import { useForm, type FieldValues } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createCourseSchema, CreateCourseSchema } from "@/lib/types";
+import { createCourse } from "./actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useConfetti } from "@/hooks/use-confetti";
 
 export default function CourseCreatePage() {
   const {
@@ -33,11 +37,24 @@ export default function CourseCreatePage() {
   } = useForm<CreateCourseSchema>({
     resolver: zodResolver(createCourseSchema),
   });
+  const router = useRouter();
+  const { triggerConfetti } = useConfetti();
 
   const onSubmit = async (data: CreateCourseSchema) => {
-    console.log(data);
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    reset();
+    try {
+      const result = await createCourse(data);
+
+      if (!result.success) {
+        toast.error(result.message);
+        return;
+      }
+      toast.success("Course created successfully");
+      triggerConfetti();
+      reset();
+      router.push(`/courses/${result.courseId}`);
+    } catch {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
