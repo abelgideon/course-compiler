@@ -18,7 +18,7 @@ const currentVideo = {
 
 export default function VideoPlayer() {
   return (
-    <div className="p-3">
+    <div className="p-3 md:p-0">
       <div className="flex flex-col md:flex-row items-center md:justify-between border-b pb-2 gap-3">
         <div>
           <h1 className="text-xl font-semibold">{course.title}</h1>

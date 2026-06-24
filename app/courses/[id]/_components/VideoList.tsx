@@ -46,7 +46,7 @@ const progressPercentage =
 
 export default function VideoList() {
   return (
-    <div className="p-3 flex flex-col gap-y-3">
+    <div className="p-3 md:p-0 flex flex-col gap-y-3">
       <div className="space-y-2">
         <div className="flex justify-between text-sm">
           <span className="font-medium">Course Progress</span>
