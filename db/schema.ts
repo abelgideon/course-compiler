@@ -9,6 +9,7 @@ import {
   varchar,
   integer,
   unique,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -157,11 +158,42 @@ export const videos = pgTable("videos", {
     .$onUpdate(() => new Date()),
 });
 
-export const videoRelations = relations(videos, ({ one }) => ({
+export const userVideoProgress = pgTable(
+  "user_video_progress",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+
+    videoId: uuid("video_id")
+      .notNull()
+      .references(() => videos.id, { onDelete: "cascade" }),
+
+    completed: boolean("completed").notNull().default(false),
+
+    watchedSeconds: integer("watched_seconds").notNull().default(0),
+
+    completedAt: timestamp("completed_at"),
+
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .notNull()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    primaryKey({
+      columns: [table.userId, table.videoId],
+    }),
+  ],
+);
+
+export const videoRelations = relations(videos, ({ one, many }) => ({
   playlist: one(playlists, {
     fields: [videos.playlistId],
     references: [playlists.id],
   }),
+
+  progress: many(userVideoProgress),
 }));
 
 export const playlistRelations = relations(playlists, ({ many }) => ({
@@ -185,6 +217,7 @@ export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   courses: many(courses),
+  videoProgress: many(userVideoProgress),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -200,6 +233,24 @@ export const accountRelations = relations(account, ({ one }) => ({
     references: [user.id],
   }),
 }));
+
+export const userVideoProgressRelations = relations(
+  userVideoProgress,
+  ({ one }) => ({
+    user: one(user, {
+      fields: [userVideoProgress.userId],
+      references: [user.id],
+    }),
+
+    video: one(videos, {
+      fields: [userVideoProgress.videoId],
+      references: [videos.id],
+    }),
+  }),
+);
+
+export type UserVideoProgress = typeof userVideoProgress.$inferSelect;
+export type NewUserVideoProgress = typeof userVideoProgress.$inferInsert;
 
 export type Playlist = typeof playlists.$inferSelect;
 export type NewPlaylist = typeof playlists.$inferInsert;

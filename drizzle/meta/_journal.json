@@ -15,6 +15,13 @@
       "when": 1782156117807,
       "tag": "0001_long_zombie",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782300396005,
+      "tag": "0002_shocking_jackal",
+      "breakpoints": true
     }
   ]
 }
