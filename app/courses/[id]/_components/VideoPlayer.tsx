@@ -1,29 +1,35 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CheckCircle, RefreshCcw } from "lucide-react";
+import { markVideoComplete } from "../actions";
 
-const course = {
-  title: "Learn HTML & CSS by Building Projects",
-  lastSynced: "2 hours ago",
+type VideoPlayerProps = {
+  course: {
+    title: string;
+    playlist: {
+      lastSyncedAt: Date | null;
+    };
+  };
+  video: {
+    id: string;
+    title: string;
+    description: string | null;
+    youtubeVideoId: string;
+    completed: boolean;
+  };
 };
 
-const currentVideo = {
-  id: "3",
-  title: "Understanding CSS Selectors",
-  description:
-    "Learn how CSS selectors work, including element, class, ID, attribute, and pseudo-class selectors. By the end of this lesson you'll be able to target HTML elements precisely and write cleaner stylesheets.",
-  duration: "9:15",
-  youtubeId: "dQw4w9WgXcQ",
-};
-
-export default function VideoPlayer() {
+export default function VideoPlayer({ course, video }: VideoPlayerProps) {
   return (
     <div className="p-3 md:p-0">
       <div className="flex flex-col md:flex-row items-center md:justify-between border-b pb-2 gap-3">
         <div>
           <h1 className="text-xl font-semibold">{course.title}</h1>
+
           <p className="text-xs text-muted-foreground">
-            Synced {course.lastSynced}
+            {course.playlist.lastSyncedAt
+              ? `Synced ${course.playlist.lastSyncedAt.toLocaleString()}`
+              : "Never synced"}
           </p>
         </div>
 
@@ -41,26 +47,35 @@ export default function VideoPlayer() {
       <div className="mt-4 aspect-video overflow-hidden rounded-lg border">
         <iframe
           className="h-full w-full"
-          src={`https://www.youtube.com/embed/${currentVideo.youtubeId}`}
-          title={currentVideo.title}
+          src={`https://www.youtube.com/embed/${video.youtubeVideoId}`}
+          title={video.title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />
       </div>
 
       <div className="mt-4">
-        <div className="flex items-center gap-2">
-          <h2 className="text-lg font-medium">{currentVideo.title}</h2>
-          <span className="text-sm text-muted-foreground">
-            ({currentVideo.duration})
-          </span>
-        </div>
-
-        <p className="mt-2 text-muted-foreground">{currentVideo.description}</p>
-
-        <Button variant="outline" className="mt-6">
-          <CheckCircle /> Mark as complete
-        </Button>
+        <h2 className="text-lg font-medium">{video.title}</h2>
+        <form
+          action={async () => {
+            "use server";
+            await markVideoComplete(video.id);
+          }}
+          className="mt-4 mb-4"
+        >
+          <button
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              video.completed && "bg-green-800 text-white",
+            )}
+          >
+            <CheckCircle />
+            {video.completed ? "Completed" : "Mark as complete"}
+          </button>
+        </form>
+        {video.description && (
+          <p className=" text-muted-foreground">{video.description}</p>
+        )}
       </div>
     </div>
   );

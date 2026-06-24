@@ -1,78 +1,65 @@
+import Link from "next/link";
+import { Progress } from "@/components/ui/progress";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { PlayCircleIcon, PlayIcon } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { CheckCircle, PlayIcon } from "lucide-react";
 
-const videos = [
-  {
-    id: "1",
-    title: "Introduction to HTML",
-    duration: "5:32",
-    completed: true,
-  },
-  {
-    id: "2",
-    title: "Building Your First Web Page",
-    duration: "12:48",
-    completed: true,
-  },
-  {
-    id: "3",
-    title: "Understanding CSS Selectors",
-    duration: "9:15",
-    completed: false,
-  },
-  {
-    id: "4",
-    title: "Flexbox Crash Course",
-    duration: "18:24",
-    completed: false,
-  },
-  {
-    id: "5",
-    title: "Responsive Design Basics",
-    duration: "14:07",
-    completed: false,
-  },
-];
-
-const courseProgress = {
-  completed: 2,
-  total: 5,
+type VideoListProps = {
+  courseId: string;
+  currentVideoId: string;
+  videos: {
+    id: string;
+    title: string;
+    completed: boolean;
+  }[];
 };
 
-const progressPercentage =
-  (courseProgress.completed / courseProgress.total) * 100;
+export default function VideoList({
+  courseId,
+  currentVideoId,
+  videos,
+}: VideoListProps) {
+  const completedVideos = videos.filter((video) => video.completed).length;
 
-export default function VideoList() {
+  const progressPercentage =
+    videos.length === 0 ? 0 : (completedVideos / videos.length) * 100;
+
   return (
-    <div className="p-3 md:p-0 flex flex-col gap-y-3">
+    <div className="p-3 md:p-0 flex flex-col gap-y-3 md:max-h-[calc(100vh-8rem)] md:overflow-y-auto">
       <div className="space-y-2">
         <div className="flex justify-between text-sm">
           <span className="font-medium">Course Progress</span>
+
           <span className="text-muted-foreground">
-            {courseProgress.completed}/{courseProgress.total} completed
+            {completedVideos}/{videos.length} completed
           </span>
         </div>
 
         <Progress value={progressPercentage} />
       </div>
+
       {videos.map((video) => (
-        <button
+        <Link
           key={video.id}
+          href={`/courses/${courseId}?video=${video.id}`}
           className={cn(
-            buttonVariants({ variant: "secondary" }),
-            "flex justify-start gap-x-4 p-7",
+            buttonVariants({
+              variant: video.id === currentVideoId ? "default" : "secondary",
+            }),
+            video.completed && "bg-green-800 text-white",
+            "flex w-full justify-start gap-x-4 p-7",
           )}
         >
-          <PlayIcon className="shrink-0" />
-          <div className="flex flex-col items-start text-left">
-            <span>{video.title}</span>
-            <span className="text-xs text-muted-foreground">
-              {video.duration}
-            </span>
+          {video.completed ? (
+            <CheckCircle className="shrink-0" />
+          ) : (
+            <PlayIcon className="shrink-0" />
+          )}
+
+          <div className="min-w-0 flex-1 text-left">
+            <span className="block line-clamp-2">{video.title}</span>
           </div>
-        </button>
+        </Link>
       ))}
     </div>
   );
