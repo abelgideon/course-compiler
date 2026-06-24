@@ -1,3 +1,6 @@
+import VideoList from "./_components/VideoList";
+import VideoPlayer from "./_components/VideoPlayer";
+
 export default async function SingleCoursePage({
   params,
 }: {
@@ -6,8 +9,9 @@ export default async function SingleCoursePage({
   const { id } = await params;
 
   return (
-    <>
-      <h1>Single course id: {id}</h1>
-    </>
+    <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr]">
+      <VideoPlayer />
+      <VideoList />
+    </div>
   );
 }
