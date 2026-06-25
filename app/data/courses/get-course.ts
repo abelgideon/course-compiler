@@ -22,7 +22,7 @@ export async function getCourse(courseId: string) {
       playlist: {
         with: {
           videos: {
-            orderBy: (videos, { desc }) => [desc(videos.position)],
+            orderBy: (videos, { asc }) => [asc(videos.position)],
             with: {
               progress: {
                 where: eq(userVideoProgress.userId, session.user.id),
