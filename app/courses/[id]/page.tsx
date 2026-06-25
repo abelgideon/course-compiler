@@ -32,14 +32,18 @@ export default async function SingleCoursePage({
     course.playlist.videos[0];
 
   return (
-    <div className="mt-5 gap-4 md:gap-9 md:mt-9 grid grid-cols-1 md:grid-cols-[3fr_1fr]">
-      <VideoPlayer course={course} video={currentVideo} />
+    <div className="mt-5 gap-4 md:gap-9 md:mt-9 grid grid-cols-1 md:grid-cols-[2fr_1fr]">
+      <div className="min-w-0">
+        <VideoPlayer course={course} video={currentVideo} />
+      </div>
 
-      <VideoList
-        courseId={course.id}
-        currentVideoId={currentVideo.id}
-        videos={course.playlist.videos}
-      />
+      <div className="min-w-0">
+        <VideoList
+          courseId={course.id}
+          currentVideoId={currentVideo.id}
+          videos={course.playlist.videos}
+        />
+      </div>
     </div>
   );
 }
