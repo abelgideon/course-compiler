@@ -12,6 +12,7 @@ import Link from "next/link";
 import { CourseProgress } from "./CourseProgress";
 import { getCourse } from "@/app/data/courses/get-course";
 import { notFound } from "next/navigation";
+import { DeleteCourseButton } from "./DeleteCourseButton";
 
 export async function CourseCard({ course }: { course: Course }) {
   const result = await getCourse(course.id);
@@ -33,7 +34,7 @@ export async function CourseCard({ course }: { course: Course }) {
               {course.title}
             </Link>
           </CardTitle>
-          <Trash2Icon className="text-red-600 size-5 shrink-0" />
+          <DeleteCourseButton courseId={course.id} />
         </div>
         <CardDescription className="line-clamp-3">
           {course.description}

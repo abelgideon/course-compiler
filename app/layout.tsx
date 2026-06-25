@@ -32,9 +32,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Course Compiler",
   description: "Store your courses and track your progress all in one place.",
-  icons: {
-    icon: "/logo.png"
-  }
 };
 
 export default function RootLayout({
