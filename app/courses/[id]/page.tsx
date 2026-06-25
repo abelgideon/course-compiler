@@ -27,9 +27,12 @@ export default async function SingleCoursePage({
     notFound();
   }
 
-  const currentVideo =
-    course.playlist.videos.find((v) => v.id === video) ??
+  const initialVideo =
+    course.playlist.videos.find((v) => v.completed !== true) ??
     course.playlist.videos[0];
+
+  const currentVideo =
+    course.playlist.videos.find((v) => v.id === video) ?? initialVideo;
 
   return (
     <div className="mt-5 gap-4 md:gap-9 md:mt-9 grid grid-cols-1 md:grid-cols-[2fr_1fr]">
