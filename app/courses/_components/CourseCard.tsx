@@ -10,7 +10,7 @@ import { CourseWithDuration } from "@/lib/types";
 import { Folder, School, Tags, TimerIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 import { CourseProgress } from "./CourseProgress";
-import { getCourse } from "@/lib/courses/get-course";
+import { getCourse } from "@/app/data/courses/get-course";
 import { notFound } from "next/navigation";
 
 export async function CourseCard({ course }: { course: Course }) {

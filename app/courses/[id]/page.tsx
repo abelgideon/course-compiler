@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { getCourse } from "@/lib/courses/get-course";
+import { getCourse } from "@/app/data/courses/get-course";
 
 import VideoList from "./_components/VideoList";
 import VideoPlayer from "./_components/VideoPlayer";

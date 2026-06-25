@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CourseCard } from "./_components/CourseCard";
-import { getCourses } from "@/lib/courses/get-courses";
+import { getCourses } from "@/app/data/courses/get-courses";
 
 export default async function CoursesPage() {
   const session = await auth.api.getSession({

@@ -3,9 +3,9 @@
 import { db } from "@/db/drizzle";
 import { courses, playlists, videos } from "@/db/schema";
 import { createCourseSchema } from "@/lib/types";
-import { extractPlaylistId } from "@/lib/youtube/extract-playlist-id";
-import { getPlaylist } from "@/lib/youtube/get-playlist";
-import { getPlaylistVideos } from "@/lib/youtube/get-playlist-videos";
+import { extractPlaylistId } from "@/app/data/youtube/extract-playlist-id";
+import { getPlaylist } from "@/app/data/youtube/get-playlist";
+import { getPlaylistVideos } from "@/app/data/youtube/get-playlist-videos";
 import { eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
