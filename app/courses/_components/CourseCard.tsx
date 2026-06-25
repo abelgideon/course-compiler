@@ -25,7 +25,7 @@ export async function CourseCard({ course }: { course: Course }) {
   return (
     <Card className="flex flex-col">
       <CardHeader>
-        <div className="flex justify-between gap-x-2">
+        <div className="flex justify-between gap-x-2 items-start">
           <CardTitle className="line-clamp-3">
             <Link
               className="hover:underline hover:text-primary"
