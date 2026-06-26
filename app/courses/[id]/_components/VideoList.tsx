@@ -32,7 +32,8 @@ export default function VideoList({
               buttonVariants({
                 variant: video.id === currentVideoId ? "default" : "secondary",
               }),
-              video.completed && "bg-green-800 text-white",
+              video.completed &&
+                "bg-green-800 hover:bg-green-800/80 text-white",
               "flex w-full justify-start gap-x-4 p-7",
             )}
           >
