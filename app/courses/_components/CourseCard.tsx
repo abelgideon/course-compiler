@@ -25,7 +25,7 @@ export type CourseCardData = {
   completedVideos: number;
 };
 
-export async function CourseCard({ course }: { course: CourseCardData }) {
+export function CourseCard({ course }: { course: CourseCardData }) {
   return (
     <Card className="flex flex-col">
       <CardHeader>

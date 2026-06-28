@@ -4,8 +4,8 @@ import { CircleSlash, PlusIcon } from "lucide-react";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { CourseCard } from "./_components/CourseCard";
 import { getCourses } from "@/app/data/courses/get-courses";
+import { CourseDisplay } from "./_components/CourseDisplay";
 
 export default async function CoursesPage() {
   const session = await auth.api.getSession({
@@ -41,12 +41,7 @@ export default async function CoursesPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid-cols-1 grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-7">
-          {courses &&
-            courses.map((course) => (
-              <CourseCard key={course.id} course={course} />
-            ))}
-        </div>
+        <CourseDisplay courses={courses} />
       )}
     </div>
   );
