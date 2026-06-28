@@ -1,16 +1,14 @@
 import { Progress } from "@/components/ui/progress";
 
-type Videos = {
-  id: string;
-  title: string;
-  completed: boolean;
-}[];
-
-export function CourseProgress({ videos }: { videos: Videos }) {
-  const completedVideos = videos.filter((video) => video.completed).length;
-
+export function CourseProgress({
+  completedVideos,
+  videoCount,
+}: {
+  completedVideos: number;
+  videoCount: number;
+}) {
   const progressPercentage =
-    videos.length === 0 ? 0 : (completedVideos / videos.length) * 100;
+    videoCount === 0 ? 0 : (completedVideos / videoCount) * 100;
 
   return (
     <div className="space-y-2">
@@ -18,7 +16,7 @@ export function CourseProgress({ videos }: { videos: Videos }) {
         <span className="font-medium">Course Progress</span>
 
         <span className="text-muted-foreground">
-          {completedVideos}/{videos.length} completed
+          {completedVideos}/{videoCount} completed
         </span>
       </div>
 

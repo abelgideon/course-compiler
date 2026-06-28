@@ -20,9 +20,15 @@ export default function VideoList({
   currentVideoId,
   videos,
 }: VideoListProps) {
+  const videoCount = videos.length;
+  const completedVideos = videos.filter((video) => video.completed).length;
+
   return (
     <div className="flex flex-col gap-y-5">
-      <CourseProgress videos={videos} />
+      <CourseProgress
+        videoCount={videoCount}
+        completedVideos={completedVideos}
+      />
       <div className="p-3 md:p-0 flex flex-col border-b md:max-h-[calc(100vh-8rem)] md:overflow-y-auto">
         {videos.map((video) => (
           <Link

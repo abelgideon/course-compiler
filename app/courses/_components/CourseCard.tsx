@@ -5,23 +5,27 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Course } from "@/db/schema";
-import { CourseWithDuration } from "@/lib/types";
-import { Folder, School, Tags, TimerIcon, Trash2Icon } from "lucide-react";
+import { Folder } from "lucide-react";
 import Link from "next/link";
 import { CourseProgress } from "./CourseProgress";
-import { getCourse } from "@/app/data/courses/get-course";
-import { notFound } from "next/navigation";
 import { DeleteCourseButton } from "./DeleteCourseButton";
 
-export async function CourseCard({ course }: { course: Course }) {
-  const result = await getCourse(course.id);
-  if (!result.success) {
-    notFound();
-  }
+export type CourseCardData = {
+  id: string;
+  title: string;
+  description: string | null;
+  category: string | null;
+  createdAt: Date;
+  playlist: {
+    id: string;
+    playlistTitle: string | null;
+    thumbnailUrl: string | null;
+    videoCount: number | null;
+  };
+  completedVideos: number;
+};
 
-  const fetchedCourse = result.course;
-
+export async function CourseCard({ course }: { course: CourseCardData }) {
   return (
     <Card className="flex flex-col">
       <CardHeader>
@@ -41,7 +45,10 @@ export async function CourseCard({ course }: { course: Course }) {
         </CardDescription>
       </CardHeader>
       <CardFooter className="mt-auto flex flex-col gap-y-7 items-stretch">
-        <CourseProgress videos={fetchedCourse?.playlist.videos ?? []} />
+        <CourseProgress
+          completedVideos={course.completedVideos}
+          videoCount={course.playlist.videoCount ?? 0}
+        />
 
         <div className="flex items-center gap-x-2">
           <Folder className="size-7 rounded-md bg-primary/10 p-1 text-primary" />
