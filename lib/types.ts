@@ -38,8 +38,26 @@ export const createCourseSchema = z.object({
     .optional(),
 });
 
+export const editCourseSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(1, "Title is required")
+    .max(50, "Title can not be more than 50 characters"),
+  description: z
+    .string()
+    .trim()
+    .max(100, "Description can not be more than 100 characters")
+    .optional(),
+  category: z
+    .string()
+    .max(50, "Category can not be more than 50 characters")
+    .optional(),
+});
+
 export type CourseWithDuration = Course & {
   totalDuration: number;
 };
 
 export type CreateCourseSchema = z.infer<typeof createCourseSchema>;
+export type EditCourseSchema = z.infer<typeof editCourseSchema>;

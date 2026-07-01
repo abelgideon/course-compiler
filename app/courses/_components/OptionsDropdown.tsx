@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { deleteCourseAction } from "../actions";
+import Link from "next/link";
 
 export function OptionsDropdown({ courseId }: { courseId: string }) {
   const [open, setOpen] = useState(false);
@@ -60,9 +61,11 @@ export function OptionsDropdown({ courseId }: { courseId: string }) {
 
       <DropdownMenuContent className="mr-2">
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <PencilIcon />
-            Edit
+          <DropdownMenuItem asChild>
+            <Link href={`/courses/edit/${courseId}`}>
+              <PencilIcon />
+              Edit
+            </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem disabled>
