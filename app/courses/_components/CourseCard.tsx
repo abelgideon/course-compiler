@@ -8,7 +8,6 @@ import {
 import { Folder } from "lucide-react";
 import Link from "next/link";
 import { CourseProgress } from "./CourseProgress";
-import { DeleteCourseButton } from "./DeleteCourseButton";
 import { OptionsDropdown } from "./OptionsDropdown";
 
 export type CourseCardData = {
@@ -39,8 +38,7 @@ export function CourseCard({ course }: { course: CourseCardData }) {
               {course.title}
             </Link>
           </CardTitle>
-          {/* <DeleteCourseButton courseId={course.id} /> */}
-          <OptionsDropdown />
+          <OptionsDropdown courseId={course.id} />
         </div>
         <CardDescription className="line-clamp-3">
           {course.description}
